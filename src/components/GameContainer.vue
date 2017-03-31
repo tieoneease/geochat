@@ -1,5 +1,5 @@
 <template>
-<router-view :game="$firebaseRefs.game"></router-view>
+<router-view :gameRef="$firebaseRefs.game" :game></router-view>
 </template>
 
 <script>

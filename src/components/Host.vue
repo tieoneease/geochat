@@ -1,26 +1,36 @@
 <template>
 <div>
-  <button @click="shit">fuck</button>
+  <button @click="log">hello</button>
 </div>
 </template>
 
 <script>
+import db from '@/config/db'
 export default {
   name: 'host',
-  props: ['game'],
+  props: ['gameRef'],
   created () {
-      this.game.once('value').then(function(snapshot) { console.log(snapshot.val()) })
+    const vm = this;
+    this.gameRef.once('value').then(function(snapshot) { vm.game = snapshot.val() })
   },
   computed: {
   },
   data () {
     return {
-      gameData: {}
+      game: {}
+    }
+  },
+  firebase () {
+    return {
+      game: {
+        source: db.ref('games/').child(this.roomName),
+        asObject: true
+      }
     }
   },
   methods: {
-    shit: function() {
-      this.game.child('isPlaying').set(true)
+    log: function() {
+      console.log(this.gameRef)
     }
   }
 }
