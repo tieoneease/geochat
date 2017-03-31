@@ -3,7 +3,7 @@
   <div class="ui large form">
     <div class="ui stacked segment">
       <div class="field">
-        <input v-model="roomName" type="text" name="room-number" placeholder="Enter Room Number...">
+        <input v-model="roomCode" type="text" name="room-code" placeholder="Enter Room Code...">
       </div>
       <div class="two large ui buttons">
         <button @click="createRoom" class="ui teal button">
@@ -24,15 +24,15 @@ export default {
   name: 'start-form',
   data () {
     return {
-      roomName: ''
+      roomCode: ''
     }
   },
   methods: {
     createRoom: function() {
-      this.$router.push({ name: 'Host', params: { roomName: this.roomName }})
+      this.$router.push({ name: 'Host', params: { roomCode: this.roomCode }})
     },
     joinRoom: function() {
-      this.$router.push({ name: 'Player', params: { roomName: this.roomName }})
+      this.$router.push({ name: 'Player', params: { roomCode: this.roomCode }})
     }
   }
 }

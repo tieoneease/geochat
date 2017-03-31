@@ -1,31 +1,27 @@
 <template>
-<div>
-  <p>
-  this is my {{playerName}}
-  </p>
+<div class="column">
+  this is my player class in room {{this.roomCode}}
 </div>
 </template>
 
 <script>
+import db from '@/config/db'
 export default {
   name: 'player',
-  props: ['gameRef', 'playerName'],
+  props: ['roomCode'],
   data () {
     return {
     }
   },
   firebase () {
     return {
-      player: {
-        source: this.gameRef.child('players' + this.playerName),
+      game: {
+        source: db.ref('games/').child(this.roomCode),
         asObject: true
       }
     }
   },
   methods: {
-    shit: function() {
-      this.$firebaseRefs.player.push('lol')
-    }
   }
 }
 </script>
