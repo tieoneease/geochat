@@ -45,7 +45,6 @@
 <script>
 import db from '@/config/db'
 
-
 function getTime() {
   return new Date().toLocaleString().split('/').join('-').split(',')[1]
 }
@@ -65,13 +64,10 @@ export default {
       usernameInput: ''
     }
   },
-  mounted () {
-    this.messagesNode = document.getElementById('messages')
-  },
   updated() {
-    if (!this.messagesNode)
-      this.messagesNode = document.getElementById('messages')
-    scrollToBottom(this.messagesNode)
+    let messagesNode = document.getElementById('messages')
+    if (messagesNode)
+      scrollToBottom(messagesNode)
   },
   firebase () {
     return {
@@ -79,6 +75,9 @@ export default {
     }
   },
   methods: {
+    setUser: function() {
+      this.username = this.usernameInput
+    },
     send: function() {
       let message = {
         text: this.messageText,
@@ -87,9 +86,6 @@ export default {
       }
       this.messageText = ''
       this.$firebaseRefs.messages.push(message)
-    },
-    setUser: function() {
-      this.username = this.usernameInput
     }
   }
 }
