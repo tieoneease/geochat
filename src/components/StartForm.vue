@@ -16,6 +16,8 @@
 
 <script>
 import db from '@/config/db'
+import geo from '@/config/geo'
+
 export default {
   name: 'start-form',
   data () {
