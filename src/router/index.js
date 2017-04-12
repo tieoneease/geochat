@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import StartForm from '@/components/StartForm'
-import Player from '@/components/Player'
-import Host from '@/components/Host'
+import Room from '@/components/Room'
 
 Vue.use(Router)
 
@@ -14,15 +13,9 @@ export default new Router({
       component: StartForm
     },
     {
-      path: '/host',
-      name: 'Host',
-      component: Host,
-      props: true
-    },
-    {
-      path: '/player',
-      name: 'Player',
-      component: Player,
+      path: '/room/:roomCode',
+      name: 'Room',
+      component: Room,
       props: true
     },
   ]

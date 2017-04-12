@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="ui middle aligned center aligned grid">
+  <div id="app" class="ui centered grid">
     <router-view></router-view>
   </div>
 </template>
