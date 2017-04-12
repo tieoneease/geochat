@@ -6,23 +6,37 @@
       Room {{roomCode}}
     </h3>
 
-    <div id="messages" class="ui attached segment comments">
-      <div v-for="message in messages" class="comment">
-        <div class="content">
-          <a class="author">{{message.username}}</a>
-          <div class="metadata">{{message.createdAt}}</div>
-          <div class="text">{{message.text}}</div>
+    <template v-if="username == ''">
+      <div class="ui attached segment">
+        <h4 class="ui center aligned header">
+          Please enter a name for yourself
+        </h4>
+      </div>
+      <div class="ui bottom attached segment action input">
+        <input type="text" v-model="usernameInput" @keyup.enter="setUser" placeholder="Your Username">
+        <button @click="setUser" class="ui blue button">Set</button>
+      </div>
+    </template>
+
+    <template v-else>
+      <div id="messages" class="ui attached segment comments">
+        <div v-for="message in messages" class="comment">
+          <div class="content">
+            <a class="author">{{message.username}}</a>
+            <div class="metadata">{{message.createdAt}}</div>
+            <div class="text">{{message.text}}</div>
+          </div>
+        </div>
+        <div v-if="messages.length == 0">
+          No Messages yet
         </div>
       </div>
-      <div v-if="messages.length == 0">
-        No Messages yet
-      </div>
-    </div>
 
-    <div class="ui bottom attached segment action input">
-      <input type="text" v-model="messageText" @keyup.enter="send" placeholder="Type Message...">
-      <button @click="send" class="ui blue button">Send</button>
-    </div>
+      <div class="ui bottom attached segment action input">
+        <input type="text" v-model="messageText" @keyup.enter="send" placeholder="Type Message...">
+        <button @click="send" class="ui blue button">Send</button>
+      </div>
+    </template>
 
   </div>
 </div>
@@ -46,13 +60,17 @@ export default {
   data () {
     return {
       messageText: '',
-      messagesNode: {}
+      messagesNode: {},
+      username: '',
+      usernameInput: ''
     }
   },
   mounted () {
     this.messagesNode = document.getElementById('messages')
   },
   updated() {
+    if (!this.messagesNode)
+      this.messagesNode = document.getElementById('messages')
     scrollToBottom(this.messagesNode)
   },
   firebase () {
@@ -65,10 +83,13 @@ export default {
       let message = {
         text: this.messageText,
         createdAt: getTime(),
-        username: 'Matt'
+        username: this.username
       }
       this.messageText = ''
       this.$firebaseRefs.messages.push(message)
+    },
+    setUser: function() {
+      this.username = this.usernameInput
     }
   }
 }
